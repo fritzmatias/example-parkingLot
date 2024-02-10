@@ -1,0 +1,29 @@
+lot:
+  parking-spots:
+    -
+      spots: 10
+      type: compact
+    -
+      spots: 10
+      type: regular
+    -
+      spots: 5
+      type: motorcycle
+
+  mappings:
+    -
+      vehicle-type: motorcycle
+      spot-type: motorcycle
+      required-slots: 1
+    -
+      vehicle-type: car
+      spot-type: regular
+      required-slots: 1
+    -
+      vehicle-type: car
+      spot-type: compact
+      required-slots: 1
+    -
+      vehicle-type: van
+      spot-type: regular
+      required-slots: 3
