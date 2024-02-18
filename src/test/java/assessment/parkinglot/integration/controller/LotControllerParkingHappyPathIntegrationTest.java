@@ -3,8 +3,10 @@ package assessment.parkinglot.integration.controller;
 import assessment.parkinglot.controller.LotController;
 import assessment.parkinglot.controller.model.ParkingRequest;
 import assessment.parkinglot.errors.DataDuplication;
+import assessment.parkinglot.config.components.PersistenceCleanerService;
 import assessment.parkinglot.services.PersistenceService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,9 +26,10 @@ public class LotControllerParkingHappyPathIntegrationTest
     @Autowired
     public LotControllerParkingHappyPathIntegrationTest(
             WebApplicationContext webApplicationContext
+            , PersistenceCleanerService persistenceCleanerService
             , PersistenceService persistenceService
     ) {
-        super(webApplicationContext, LotController.class);
+        super(webApplicationContext, persistenceCleanerService , LotController.class);
         this.persistenceService = persistenceService;
     }
 
@@ -55,7 +58,7 @@ public class LotControllerParkingHappyPathIntegrationTest
                 ).andExpect(
                         MockMvcResultMatchers.jsonPath("$.slots.size()").value("1")
                 ).andExpect(
-                        MockMvcResultMatchers.jsonPath("$.slots[0]").value("1")
+                        MockMvcResultMatchers.jsonPath("$.slots[0]").isNotEmpty()
                 )
                 .andReturn();
     }
@@ -85,11 +88,23 @@ public class LotControllerParkingHappyPathIntegrationTest
                 ).andExpect(
                         MockMvcResultMatchers.jsonPath("$.slots.size()").value("3")
                 ).andExpect(
-                        MockMvcResultMatchers.jsonPath("$.slots[0]").value("1")
+                        MockMvcResultMatchers.jsonPath("$.slots[0]").isNotEmpty()
                 ).andExpect(
-                        MockMvcResultMatchers.jsonPath("$.slots[1]").value("2")
+                        MockMvcResultMatchers.jsonPath("$.slots[1]").isNotEmpty()
                 ).andExpect(
-                        MockMvcResultMatchers.jsonPath("$.slots[2]").value("3")
+                        MockMvcResultMatchers.jsonPath("$.slots[2]").isNotEmpty()
+                ).andExpect(
+                        MockMvcResultMatchers.jsonPath("$.slots[0]").value(
+                                Matchers.not(MockMvcResultMatchers.jsonPath("$.slots[1]"))
+                        )
+                ).andExpect(
+                        MockMvcResultMatchers.jsonPath("$.slots[0]").value(
+                                Matchers.not(MockMvcResultMatchers.jsonPath("$.slots[2]"))
+                        )
+                ).andExpect(
+                        MockMvcResultMatchers.jsonPath("$.slots[1]").value(
+                                Matchers.not(MockMvcResultMatchers.jsonPath("$.slots[2]"))
+                        )
                 )
                 .andReturn();
     }

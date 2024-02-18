@@ -2,6 +2,7 @@ package assessment.parkinglot.integration.controller;
 
 import assessment.parkinglot.controller.LotController;
 import assessment.parkinglot.errors.DataDuplication;
+import assessment.parkinglot.config.components.PersistenceCleanerService;
 import assessment.parkinglot.peristence.repositories.VehicleTypeRepository;
 import assessment.parkinglot.services.PersistenceService;
 import org.junit.jupiter.api.Test;
@@ -19,9 +20,11 @@ public class LotControllerDataInitializationHappyPathIntegrationTest
     @Autowired
     public LotControllerDataInitializationHappyPathIntegrationTest(
             WebApplicationContext webApplicationContext
-            , PersistenceService persistenceService, VehicleTypeRepository vehicleTypeRepository
+            , PersistenceCleanerService persistenceCleanerService
+            , PersistenceService persistenceService
+            , VehicleTypeRepository vehicleTypeRepository
     ) {
-        super(webApplicationContext, LotController.class);
+        super(webApplicationContext, persistenceCleanerService, LotController.class);
         this.persistenceService = persistenceService;
         this.vehicleTypeRepository = vehicleTypeRepository;
     }

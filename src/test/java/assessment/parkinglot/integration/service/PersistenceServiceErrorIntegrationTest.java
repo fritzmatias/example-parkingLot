@@ -3,6 +3,7 @@ package assessment.parkinglot.integration.service;
 import assessment.parkinglot.errors.DataDuplication;
 import assessment.parkinglot.errors.DataNotFound;
 import assessment.parkinglot.integration.BasicIntegrationTest;
+import assessment.parkinglot.config.components.PersistenceCleanerService;
 import assessment.parkinglot.services.PersistenceService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,10 @@ public class PersistenceServiceErrorIntegrationTest
     @Autowired
     public PersistenceServiceErrorIntegrationTest(
             WebApplicationContext webApplicationContext
+            , PersistenceCleanerService persistenceCleanerService
             , PersistenceService persistenceService
     ) {
-        super(webApplicationContext);
+        super(webApplicationContext, persistenceCleanerService);
         this.persistenceService = persistenceService;
     }
 

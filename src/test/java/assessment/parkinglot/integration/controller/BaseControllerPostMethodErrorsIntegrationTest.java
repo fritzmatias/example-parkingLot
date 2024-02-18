@@ -1,5 +1,6 @@
 package assessment.parkinglot.integration.controller;
 
+import assessment.parkinglot.config.components.PersistenceCleanerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -15,9 +16,10 @@ public abstract class BaseControllerPostMethodErrorsIntegrationTest<T>
     final protected ObjectMapper mapper = new ObjectMapper();
     public BaseControllerPostMethodErrorsIntegrationTest(
             WebApplicationContext webApplicationContext
+            , PersistenceCleanerService persistenceCleanerService
             , Class<T> controller
     ) {
-        super(webApplicationContext, controller);
+        super(webApplicationContext, persistenceCleanerService, controller);
     }
 
     public abstract void badRequest_givenPostRequest_when_endpoint_validation_fails() throws Exception ;

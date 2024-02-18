@@ -2,6 +2,7 @@ package assessment.parkinglot.integration.controller;
 
 import assessment.parkinglot.controller.LotController;
 import assessment.parkinglot.controller.model.DepartingRequest;
+import assessment.parkinglot.config.components.PersistenceCleanerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.WebApplicationContext;
@@ -14,9 +15,10 @@ public class LotControllerDepartingPostMethodErrorsIntegrationTest
     @Autowired
     public LotControllerDepartingPostMethodErrorsIntegrationTest(
             WebApplicationContext webApplicationContext
+            , PersistenceCleanerService persistenceCleanerService
             , LotController controller
     ) {
-        super(webApplicationContext, LotController.class);
+        super(webApplicationContext, persistenceCleanerService, LotController.class);
     }
 
     @Test
