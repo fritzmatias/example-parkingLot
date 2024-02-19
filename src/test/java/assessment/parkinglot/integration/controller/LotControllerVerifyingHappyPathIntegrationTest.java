@@ -4,6 +4,7 @@ import assessment.parkinglot.controller.LotController;
 import assessment.parkinglot.errors.DataDuplication;
 import assessment.parkinglot.errors.DataNotFound;
 import assessment.parkinglot.controller.model.SpotTypeStatusResponse;
+import assessment.parkinglot.config.components.PersistenceCleanerService;
 import assessment.parkinglot.services.PersistenceService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -22,9 +23,10 @@ public class LotControllerVerifyingHappyPathIntegrationTest
     @Autowired
     public LotControllerVerifyingHappyPathIntegrationTest(
             WebApplicationContext webApplicationContext
+            , PersistenceCleanerService persistenceCleanerService
             , PersistenceService persistenceService
     ) {
-        super(webApplicationContext, LotController.class);
+        super(webApplicationContext, persistenceCleanerService, LotController.class);
         this.persistenceService = persistenceService;
     }
 

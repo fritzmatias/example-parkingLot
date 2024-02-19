@@ -1,6 +1,7 @@
 package assessment.parkinglot.integration.controller;
 
 import assessment.parkinglot.integration.BasicIntegrationTest;
+import assessment.parkinglot.config.components.PersistenceCleanerService;
 import jakarta.servlet.ServletContext;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockServletContext;
@@ -16,9 +17,13 @@ public abstract class BasicControllerIntegrationTest<T> extends BasicIntegration
 
     public BasicControllerIntegrationTest(
             WebApplicationContext webApplicationContext
+            , PersistenceCleanerService persistenceCleanerService
             , Class<T> expectedController
     ) {
-        super(webApplicationContext);
+        super(
+                webApplicationContext
+                , persistenceCleanerService
+        );
         this.expectedController = expectedController;
     }
 

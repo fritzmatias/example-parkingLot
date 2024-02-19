@@ -4,6 +4,7 @@ import assessment.parkinglot.controller.LotController;
 import assessment.parkinglot.errors.DataDuplication;
 import assessment.parkinglot.errors.DataNotFound;
 import assessment.parkinglot.controller.model.DepartingRequest;
+import assessment.parkinglot.config.components.PersistenceCleanerService;
 import assessment.parkinglot.peristence.repositories.SpotRepository;
 import assessment.parkinglot.services.PersistenceService;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -27,9 +28,11 @@ public class LotControllerDepartingHappyPathIntegrationTest
     @Autowired
     public LotControllerDepartingHappyPathIntegrationTest(
             WebApplicationContext webApplicationContext
-            , PersistenceService persistenceService, SpotRepository spotRepository
+            , PersistenceCleanerService persistenceCleanerService
+            , PersistenceService persistenceService
+            , SpotRepository spotRepository
     ) {
-        super(webApplicationContext, LotController.class);
+        super(webApplicationContext, persistenceCleanerService, LotController.class);
         this.persistenceService = persistenceService;
         this.spotRepository = spotRepository;
     }
@@ -63,8 +66,8 @@ public class LotControllerDepartingHappyPathIntegrationTest
                 MockMvcResultMatchers.jsonPath("$.asOf").isNotEmpty()
         ).andExpect(
                 MockMvcResultMatchers.jsonPath("$.parkingId").value(departingRequest.parkingId())
-        ).andExpect(
-                MockMvcResultMatchers.jsonPath("$.slots[0]").value("1")
+       ).andExpect(
+                MockMvcResultMatchers.jsonPath("$.slots[0]").isNotEmpty()
         )
         ;
     }

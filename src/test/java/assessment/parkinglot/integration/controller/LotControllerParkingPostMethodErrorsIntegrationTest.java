@@ -3,6 +3,7 @@ package assessment.parkinglot.integration.controller;
 import assessment.parkinglot.controller.LotController;
 import assessment.parkinglot.controller.model.ParkingRequest;
 import assessment.parkinglot.errors.DataDuplication;
+import assessment.parkinglot.config.components.PersistenceCleanerService;
 import assessment.parkinglot.peristence.repositories.SpotRepository;
 import assessment.parkinglot.peristence.repositories.SpotTypeRepository;
 import assessment.parkinglot.services.PersistenceService;
@@ -23,9 +24,10 @@ public class LotControllerParkingPostMethodErrorsIntegrationTest
     @Autowired
     public LotControllerParkingPostMethodErrorsIntegrationTest(
             WebApplicationContext webApplicationContext
+            , PersistenceCleanerService persistenceCleanerService
             , PersistenceService persistenceService, SpotRepository spotRepository, SpotTypeRepository spotTypeRepository, EntityManager entityManager
     ) {
-        super(webApplicationContext, LotController.class);
+        super(webApplicationContext, persistenceCleanerService , LotController.class);
         this.persistenceService = persistenceService;
         this.spotRepository = spotRepository;
         this.spotTypeRepository = spotTypeRepository;
